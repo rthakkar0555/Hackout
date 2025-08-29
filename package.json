@@ -1,0 +1,21 @@
+{
+  "name": "green-hydrogen-credit-system",
+  "version": "1.0.0",
+  "description": "Blockchain-based Green Hydrogen Credit System",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start",
+    "blockchain": "cd blockchain && npm run node",
+    "deploy": "cd blockchain && npm run deploy",
+    "test": "cd blockchain && npm run test",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ../blockchain && npm install"
+  },
+  "keywords": ["blockchain", "hydrogen", "credits", "ethereum", "solidity"],
+  "author": "Green Hydrogen Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
