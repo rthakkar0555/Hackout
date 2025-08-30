@@ -105,6 +105,8 @@ const Register = () => {
     setLoading(true);
     
     try {
+      console.log('Submitting registration form...');
+      
       const userData = {
         username: formData.username,
         email: formData.email,
@@ -119,9 +121,20 @@ const Register = () => {
         }
       };
 
+      console.log('Registration data:', { 
+        username: userData.username, 
+        email: userData.email, 
+        role: userData.role 
+      });
+
       const result = await register(userData);
+      console.log('Registration result:', result);
+      
       if (result.success) {
+        console.log('Registration successful, navigating to dashboard...');
         navigate('/dashboard');
+      } else {
+        console.log('Registration failed:', result.error);
       }
     } catch (error) {
       console.error('Registration error:', error);

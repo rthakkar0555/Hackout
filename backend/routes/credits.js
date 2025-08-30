@@ -390,60 +390,7 @@ router.post('/retire', auth, validateRequest(retireCreditSchema), async (req, re
   }
 });
 
-/**
- * @route   GET /api/credits/:id
- * @desc    Get credit details by ID
- * @access  Private
- */
-router.get('/:id', auth, async (req, res) => {
-  try {
-    const { id } = req.params;
 
-    const credit = await Credit.findById(id)
-      .populate('producer', 'username organization profile')
-      .populate('certifier', 'username organization')
-      .populate('currentOwner', 'username organization')
-      .populate('ownershipHistory.owner', 'username organization');
-
-    if (!credit) {
-      return res.status(404).json({
-        error: {
-          message: 'Credit not found'
-        }
-      });
-    }
-
-    res.json({
-      credit: {
-        id: credit._id,
-        creditId: credit.creditId,
-        blockchainTxHash: credit.blockchainTxHash,
-        producer: credit.producer,
-        certifier: credit.certifier,
-        renewableSourceType: credit.renewableSourceType,
-        hydrogenAmount: credit.hydrogenAmount,
-        creditAmount: credit.creditAmount,
-        currentOwner: credit.currentOwner,
-        currentBalance: credit.currentBalance,
-        status: credit.status,
-        isRetired: credit.isRetired,
-        ownershipHistory: credit.ownershipHistory,
-        detailedMetadata: credit.detailedMetadata,
-        verificationStatus: credit.verificationStatus,
-        createdAt: credit.createdAt,
-        updatedAt: credit.updatedAt
-      }
-    });
-
-  } catch (error) {
-    console.error('Get credit error:', error);
-    res.status(500).json({
-      error: {
-        message: 'Failed to get credit details'
-      }
-    });
-  }
-});
 
 /**
  * @route   GET /api/credits/my-credits
@@ -452,12 +399,16 @@ router.get('/:id', auth, async (req, res) => {
  */
 router.get('/my-credits', auth, async (req, res) => {
   try {
+    console.log('My credits request from user:', req.user.userId);
+    
     const { page = 1, limit = 10, status } = req.query;
 
     const query = { currentOwner: req.user.userId };
     if (status) {
       query.status = status;
     }
+
+    console.log('Query for my credits:', query);
 
     const credits = await Credit.find(query)
       .populate('producer', 'username organization')
@@ -467,6 +418,8 @@ router.get('/my-credits', auth, async (req, res) => {
       .skip((page - 1) * limit);
 
     const total = await Credit.countDocuments(query);
+
+    console.log(`Found ${credits.length} credits for user ${req.user.userId}`);
 
     res.json({
       credits: credits.map(credit => ({
@@ -494,7 +447,8 @@ router.get('/my-credits', auth, async (req, res) => {
     console.error('Get my credits error:', error);
     res.status(500).json({
       error: {
-        message: 'Failed to get credits'
+        message: 'Failed to get credits',
+        details: error.message
       }
     });
   }
@@ -566,6 +520,8 @@ router.get('/produced-credits', auth, async (req, res) => {
  */
 router.get('/statistics', auth, async (req, res) => {
   try {
+    console.log('Statistics request from user:', req.user.userId);
+    
     const stats = await Credit.getStatistics();
     const result = stats[0] || {
       totalCredits: 0,
@@ -574,6 +530,7 @@ router.get('/statistics', auth, async (req, res) => {
       retiredCredits: 0
     };
 
+    console.log('Statistics result:', result);
     res.json({
       statistics: result
     });
@@ -582,7 +539,63 @@ router.get('/statistics', auth, async (req, res) => {
     console.error('Get statistics error:', error);
     res.status(500).json({
       error: {
-        message: 'Failed to get statistics'
+        message: 'Failed to get statistics',
+        details: error.message
+      }
+    });
+  }
+});
+
+/**
+ * @route   GET /api/credits/:id
+ * @desc    Get credit details by ID
+ * @access  Private
+ */
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const credit = await Credit.findById(id)
+      .populate('producer', 'username organization profile')
+      .populate('certifier', 'username organization')
+      .populate('currentOwner', 'username organization')
+      .populate('ownershipHistory.owner', 'username organization');
+
+    if (!credit) {
+      return res.status(404).json({
+        error: {
+          message: 'Credit not found'
+        }
+      });
+    }
+
+    res.json({
+      credit: {
+        id: credit._id,
+        creditId: credit.creditId,
+        blockchainTxHash: credit.blockchainTxHash,
+        producer: credit.producer,
+        certifier: credit.certifier,
+        renewableSourceType: credit.renewableSourceType,
+        hydrogenAmount: credit.hydrogenAmount,
+        creditAmount: credit.creditAmount,
+        currentOwner: credit.currentOwner,
+        currentBalance: credit.currentBalance,
+        status: credit.status,
+        isRetired: credit.isRetired,
+        ownershipHistory: credit.ownershipHistory,
+        detailedMetadata: credit.detailedMetadata,
+        verificationStatus: credit.verificationStatus,
+        createdAt: credit.createdAt,
+        updatedAt: credit.updatedAt
+      }
+    });
+
+  } catch (error) {
+    console.error('Get credit error:', error);
+    res.status(500).json({
+      error: {
+        message: 'Failed to get credit details'
       }
     });
   }

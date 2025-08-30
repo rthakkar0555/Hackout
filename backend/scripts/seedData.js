@@ -139,23 +139,8 @@ const sampleCredits = [
         contaminants: []
       },
       documentation: {
-        certificates: [
-          {
-            name: 'Green Hydrogen Certification',
-            issuer: 'Carbon Credit Certification Authority',
-            issueDate: new Date('2024-01-15'),
-            expiryDate: new Date('2025-01-15'),
-            fileHash: 'QmCertHash123'
-          }
-        ],
-        reports: [
-          {
-            title: 'Monthly Production Report',
-            type: 'Production',
-            date: new Date('2024-01-31'),
-            fileHash: 'QmReportHash123'
-          }
-        ]
+        certificates: [],
+        reports: []
       }
     },
     status: 'ISSUED',
@@ -200,23 +185,8 @@ const sampleCredits = [
         contaminants: []
       },
       documentation: {
-        certificates: [
-          {
-            name: 'Wind Energy Certification',
-            issuer: 'Carbon Credit Certification Authority',
-            issueDate: new Date('2024-02-15'),
-            expiryDate: new Date('2025-02-15'),
-            fileHash: 'QmCertHash456'
-          }
-        ],
-        reports: [
-          {
-            title: 'Wind Energy Production Report',
-            type: 'Production',
-            date: new Date('2024-02-29'),
-            fileHash: 'QmReportHash456'
-          }
-        ]
+        certificates: [],
+        reports: []
       }
     },
     status: 'TRANSFERRED',

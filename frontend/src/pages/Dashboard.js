@@ -21,22 +21,39 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
+        console.log('Fetching dashboard data...');
+        console.log('Current token:', localStorage.getItem('token')?.substring(0, 20) + '...');
+        
         const [statsResponse, creditsResponse] = await Promise.all([
           axios.get('/api/credits/statistics'),
           axios.get('/api/credits/my-credits?limit=5')
         ]);
 
+        console.log('Dashboard data fetched successfully');
         setStats(statsResponse.data.statistics);
         setRecentCredits(creditsResponse.data.credits);
       } catch (error) {
         console.error('Failed to fetch dashboard data:', error);
+        // Set default values instead of leaving them null
+        setStats({
+          totalCredits: 0,
+          totalHydrogen: 0,
+          activeCredits: 0,
+          retiredCredits: 0
+        });
+        setRecentCredits([]);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDashboardData();
-  }, []);
+    // Only fetch if user is authenticated
+    if (user) {
+      fetchDashboardData();
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
 
   const getRoleColor = (role) => {
     switch (role) {

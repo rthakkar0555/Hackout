@@ -4,12 +4,14 @@ const creditSchema = new mongoose.Schema({
   creditId: {
     type: Number,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   blockchainTxHash: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    index: true
   },
   producer: {
     type: mongoose.Schema.Types.ObjectId,
@@ -144,8 +146,6 @@ const creditSchema = new mongoose.Schema({
 });
 
 // Indexes for better query performance
-creditSchema.index({ creditId: 1 });
-creditSchema.index({ blockchainTxHash: 1 });
 creditSchema.index({ producer: 1 });
 creditSchema.index({ currentOwner: 1 });
 creditSchema.index({ status: 1 });
