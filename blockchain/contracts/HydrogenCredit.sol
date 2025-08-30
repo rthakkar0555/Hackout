@@ -3,7 +3,6 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
@@ -12,7 +11,6 @@ import "@openzeppelin/contracts/utils/Strings.sol";
  * @author Green Hydrogen Team
  */
 contract HydrogenCredit is ERC1155, AccessControl {
-    using Counters for Counters.Counter;
     using Strings for uint256;
 
     // Role definitions
@@ -35,7 +33,7 @@ contract HydrogenCredit is ERC1155, AccessControl {
     }
 
     // State variables
-    Counters.Counter private _creditIdCounter;
+    uint256 private _creditIdCounter;
     mapping(uint256 => CreditMetadata) public creditMetadata;
     mapping(address => uint256[]) public producerCredits;
     mapping(address => uint256[]) public consumerCredits;
@@ -65,11 +63,7 @@ contract HydrogenCredit is ERC1155, AccessControl {
         uint256 timestamp
     );
 
-    event RoleGranted(
-        bytes32 indexed role,
-        address indexed account,
-        address indexed sender
-    );
+
 
     /**
      * @dev Constructor - sets up initial roles
@@ -99,8 +93,8 @@ contract HydrogenCredit is ERC1155, AccessControl {
         require(amount > 0, "Credit amount must be positive");
         require(bytes(metadataHash).length > 0, "Metadata hash required");
 
-        uint256 creditId = _creditIdCounter.current();
-        _creditIdCounter.increment();
+        uint256 creditId = _creditIdCounter;
+        _creditIdCounter++;
 
         // Create credit metadata
         creditMetadata[creditId] = CreditMetadata({
@@ -238,7 +232,6 @@ contract HydrogenCredit is ERC1155, AccessControl {
      */
     function grantRole(bytes32 role, address account) public override onlyRole(DEFAULT_ADMIN_ROLE) {
         super.grantRole(role, account);
-        emit RoleGranted(role, account, msg.sender);
     }
 
     /**
@@ -246,7 +239,7 @@ contract HydrogenCredit is ERC1155, AccessControl {
      * @return uint256 Total number of credits issued
      */
     function getTotalCreditsIssued() external view returns (uint256) {
-        return _creditIdCounter.current();
+        return _creditIdCounter;
     }
 
     /**

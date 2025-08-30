@@ -82,7 +82,7 @@ const Navbar = () => {
                 <div className="origin-top-right absolute right-0 mt-2 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
                   <div className="py-1">
                     <div className="px-4 py-2 border-b border-gray-200">
-                      <h3 className="text-sm font-medium text-gray-900">सूचनाएं</h3>
+                      <h3 className="text-sm font-medium text-gray-900">Notifications</h3>
                     </div>
                     <div className="max-h-64 overflow-y-auto">
                       <div className="px-4 py-3 hover:bg-gray-50">
@@ -92,10 +92,10 @@ const Navbar = () => {
                           </div>
                           <div className="ml-3 flex-1">
                             <p className="text-sm text-gray-900">
-                              नए क्रेडिट्स जारी किए गए हैं
+                              New credits have been issued
                             </p>
                             <p className="text-xs text-gray-500 mt-1">
-                              2 घंटे पहले
+                              2 hours ago
                             </p>
                           </div>
                         </div>
@@ -107,10 +107,10 @@ const Navbar = () => {
                           </div>
                           <div className="ml-3 flex-1">
                             <p className="text-sm text-gray-900">
-                              आपके क्रेडिट्स ट्रांसफर किए गए हैं
+                              Your credits have been transferred
                             </p>
                             <p className="text-xs text-gray-500 mt-1">
-                              1 दिन पहले
+                              1 day ago
                             </p>
                           </div>
                         </div>
@@ -118,7 +118,7 @@ const Navbar = () => {
                     </div>
                     <div className="px-4 py-2 border-t border-gray-200">
                       <a href="#" className="text-sm text-green-600 hover:text-green-500">
-                        सभी सूचनाएं देखें
+                        View all notifications
                       </a>
                     </div>
                   </div>
@@ -177,7 +177,7 @@ const Navbar = () => {
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       <UserCircleIcon className="h-4 w-4 mr-3" />
-                      प्रोफाइल
+                      Profile
                     </a>
                     <a
                       href="/settings"
@@ -185,7 +185,7 @@ const Navbar = () => {
                       onClick={() => setIsUserMenuOpen(false)}
                     >
                       <CogIcon className="h-4 w-4 mr-3" />
-                      सेटिंग्स
+                      Settings
                     </a>
                     <div className="border-t border-gray-200">
                       <button
@@ -193,7 +193,7 @@ const Navbar = () => {
                         className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <ArrowRightOnRectangleIcon className="h-4 w-4 mr-3" />
-                        लॉगआउट
+                        Logout
                       </button>
                     </div>
                   </div>

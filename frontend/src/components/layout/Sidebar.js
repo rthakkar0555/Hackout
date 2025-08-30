@@ -23,37 +23,37 @@ const Sidebar = () => {
 
   const navigation = [
     {
-      name: 'डैशबोर्ड',
+      name: 'Dashboard',
       href: '/dashboard',
       icon: HomeIcon,
       roles: ['PRODUCER', 'CERTIFIER', 'CONSUMER', 'REGULATOR']
     },
     {
-      name: 'प्रोड्यूसर पोर्टल',
+      name: 'Producer Portal',
       href: '/producer',
       icon: ChartBarIcon,
       roles: ['PRODUCER']
     },
     {
-      name: 'कंज्यूमर पोर्टल',
+      name: 'Consumer Portal',
       href: '/consumer',
       icon: CreditCardIcon,
       roles: ['CONSUMER']
     },
     {
-      name: 'ऑडिटर पोर्टल',
+      name: 'Auditor Portal',
       href: '/auditor',
       icon: CheckCircleIcon,
       roles: ['REGULATOR', 'CERTIFIER']
     },
     {
-      name: 'क्रेडिट्स',
+      name: 'Credits',
       href: '/credits',
       icon: DocumentTextIcon,
       roles: ['PRODUCER', 'CERTIFIER', 'CONSUMER', 'REGULATOR']
     },
     {
-      name: 'प्रोफाइल',
+      name: 'Profile',
       href: '/profile',
       icon: UserGroupIcon,
       roles: ['PRODUCER', 'CERTIFIER', 'CONSUMER', 'REGULATOR']

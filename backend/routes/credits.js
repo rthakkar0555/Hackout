@@ -3,7 +3,7 @@ const Joi = require('joi');
 const { ethers } = require('ethers');
 const User = require('../models/User');
 const Credit = require('../models/Credit');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 const { validateRequest } = require('../middleware/validation');
 const { getBlockchainContract } = require('../utils/blockchain');
 

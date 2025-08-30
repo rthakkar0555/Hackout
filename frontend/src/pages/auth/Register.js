@@ -25,10 +25,10 @@ const Register = () => {
   const navigate = useNavigate();
 
   const roles = [
-    { value: 'PRODUCER', label: 'प्रोड्यूसर', description: 'हाइड्रोजन उत्पादक' },
-    { value: 'CERTIFIER', label: 'सर्टिफायर', description: 'क्रेडिट्स जारी करने वाला' },
-    { value: 'CONSUMER', label: 'कंज्यूमर', description: 'क्रेडिट्स खरीदने वाला' },
-    { value: 'REGULATOR', label: 'रेगुलेटर', description: 'सिस्टम प्रशासक' }
+    { value: 'PRODUCER', label: 'Producer', description: 'Hydrogen producer' },
+    { value: 'CERTIFIER', label: 'Certifier', description: 'Credit issuer' },
+    { value: 'CONSUMER', label: 'Consumer', description: 'Credit buyer' },
+    { value: 'REGULATOR', label: 'Regulator', description: 'System administrator' }
   ];
 
   const handleChange = (e) => {
@@ -50,45 +50,45 @@ const Register = () => {
     const newErrors = {};
 
     if (!formData.username) {
-      newErrors.username = 'यूजरनेम आवश्यक है';
+      newErrors.username = 'Username is required';
     } else if (formData.username.length < 3) {
-      newErrors.username = 'यूजरनेम कम से कम 3 अक्षर का होना चाहिए';
+      newErrors.username = 'Username must be at least 3 characters';
     }
 
     if (!formData.email) {
-      newErrors.email = 'ईमेल आवश्यक है';
+      newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'कृपया एक वैध ईमेल पता दर्ज करें';
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!formData.password) {
-      newErrors.password = 'पासवर्ड आवश्यक है';
+      newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
-      newErrors.password = 'पासवर्ड कम से कम 6 अक्षर का होना चाहिए';
+      newErrors.password = 'Password must be at least 6 characters';
     }
 
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'पासवर्ड की पुष्टि करें';
+      newErrors.confirmPassword = 'Please confirm password';
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'पासवर्ड मेल नहीं खाते';
+      newErrors.confirmPassword = 'Passwords do not match';
     }
 
     if (!formData.walletAddress) {
-      newErrors.walletAddress = 'वॉलेट पता आवश्यक है';
+      newErrors.walletAddress = 'Wallet address is required';
     } else if (!/^0x[a-fA-F0-9]{40}$/.test(formData.walletAddress)) {
-      newErrors.walletAddress = 'कृपया एक वैध Ethereum वॉलेट पता दर्ज करें';
+      newErrors.walletAddress = 'Please enter a valid Ethereum wallet address';
     }
 
     if (!formData.organization) {
-      newErrors.organization = 'संगठन का नाम आवश्यक है';
+      newErrors.organization = 'Organization name is required';
     }
 
     if (!formData.firstName) {
-      newErrors.firstName = 'पहला नाम आवश्यक है';
+      newErrors.firstName = 'First name is required';
     }
 
     if (!formData.lastName) {
-      newErrors.lastName = 'अंतिम नाम आवश्यक है';
+      newErrors.lastName = 'Last name is required';
     }
 
     setErrors(newErrors);
@@ -138,10 +138,10 @@ const Register = () => {
             <span className="text-2xl">🌱</span>
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            नया खाता बनाएं
+            Create New Account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Green Hydrogen Credit System में शामिल हों
+            Join the Green Hydrogen Credit System
           </p>
         </div>
 
@@ -149,11 +149,11 @@ const Register = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Personal Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">व्यक्तिगत जानकारी</h3>
+              <h3 className="text-lg font-medium text-gray-900">Personal Information</h3>
               
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                  पहला नाम *
+                  First Name *
                 </label>
                 <input
                   id="firstName"
@@ -173,7 +173,7 @@ const Register = () => {
 
               <div>
                 <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                  अंतिम नाम *
+                  Last Name *
                 </label>
                 <input
                   id="lastName"
@@ -193,7 +193,7 @@ const Register = () => {
 
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                  फोन नंबर
+                  Phone Number
                 </label>
                 <input
                   id="phone"
@@ -208,11 +208,11 @@ const Register = () => {
 
             {/* Account Information */}
             <div className="space-y-4">
-              <h3 className="text-lg font-medium text-gray-900">खाता जानकारी</h3>
+              <h3 className="text-lg font-medium text-gray-900">Account Information</h3>
               
               <div>
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                  यूजरनेम *
+                  Username *
                 </label>
                 <input
                   id="username"
@@ -232,7 +232,7 @@ const Register = () => {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  ईमेल पता *
+                  Email Address *
                 </label>
                 <input
                   id="email"
@@ -252,7 +252,7 @@ const Register = () => {
 
               <div>
                 <label htmlFor="organization" className="block text-sm font-medium text-gray-700">
-                  संगठन का नाम *
+                  Organization Name *
                 </label>
                 <input
                   id="organization"
@@ -275,7 +275,7 @@ const Register = () => {
           {/* Role Selection */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              भूमिका चुनें *
+              Select Role *
             </label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {roles.map((role) => (
@@ -312,7 +312,7 @@ const Register = () => {
           {/* Wallet Address */}
           <div>
             <label htmlFor="walletAddress" className="block text-sm font-medium text-gray-700">
-              Ethereum वॉलेट पता *
+              Ethereum Wallet Address *
             </label>
             <input
               id="walletAddress"
@@ -330,7 +330,7 @@ const Register = () => {
               <p className="mt-1 text-sm text-red-600">{errors.walletAddress}</p>
             )}
             <p className="mt-1 text-xs text-gray-500">
-              यह पता ब्लॉकचेन पर आपकी पहचान के लिए उपयोग किया जाएगा
+              This address will be used for your identity on the blockchain
             </p>
           </div>
 
@@ -338,7 +338,7 @@ const Register = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                पासवर्ड *
+                Password *
               </label>
               <div className="relative mt-1">
                 <input
@@ -371,7 +371,7 @@ const Register = () => {
 
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
-                पासवर्ड की पुष्टि करें *
+                Confirm Password *
               </label>
               <div className="relative mt-1">
                 <input
@@ -412,22 +412,22 @@ const Register = () => {
               {loading ? (
                 <div className="flex items-center">
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  खाता बन रहा है...
+                  Creating account...
                 </div>
               ) : (
-                'खाता बनाएं'
+                'Create Account'
               )}
             </button>
           </div>
 
           <div className="text-center">
             <p className="text-sm text-gray-600">
-              पहले से खाता है?{' '}
+              Already have an account?{' '}
               <Link
                 to="/login"
                 className="font-medium text-green-600 hover:text-green-500"
               >
-                साइन इन करें
+                Sign in
               </Link>
             </p>
           </div>

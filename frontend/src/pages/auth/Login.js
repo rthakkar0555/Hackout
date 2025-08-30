@@ -34,15 +34,15 @@ const Login = () => {
     const newErrors = {};
 
     if (!formData.email) {
-      newErrors.email = 'ईमेल आवश्यक है';
+      newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'कृपया एक वैध ईमेल पता दर्ज करें';
+      newErrors.email = 'Please enter a valid email address';
     }
 
     if (!formData.password) {
-      newErrors.password = 'पासवर्ड आवश्यक है';
+      newErrors.password = 'Password is required';
     } else if (formData.password.length < 6) {
-      newErrors.password = 'पासवर्ड कम से कम 6 अक्षर का होना चाहिए';
+      newErrors.password = 'Password must be at least 6 characters';
     }
 
     setErrors(newErrors);
@@ -78,7 +78,7 @@ const Login = () => {
             <span className="text-2xl">🌱</span>
           </div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            अपने खाते में साइन इन करें
+            Sign in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             Green Hydrogen Credit System
@@ -89,7 +89,7 @@ const Login = () => {
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email" className="sr-only">
-                ईमेल पता
+                Email address
               </label>
               <input
                 id="email"
@@ -100,7 +100,7 @@ const Login = () => {
                 className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
                   errors.email ? 'border-red-300' : 'border-gray-300'
                 } placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm`}
-                placeholder="ईमेल पता"
+                placeholder="Email address"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -110,7 +110,7 @@ const Login = () => {
             </div>
             <div className="relative">
               <label htmlFor="password" className="sr-only">
-                पासवर्ड
+                Password
               </label>
               <input
                 id="password"
@@ -121,7 +121,7 @@ const Login = () => {
                 className={`appearance-none rounded-none relative block w-full px-3 py-2 pr-10 border ${
                   errors.password ? 'border-red-300' : 'border-gray-300'
                 } placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm`}
-                placeholder="पासवर्ड"
+                placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
               />
@@ -151,13 +151,13 @@ const Login = () => {
                 className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
               />
               <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                मुझे याद रखें
+                Remember me
               </label>
             </div>
 
             <div className="text-sm">
               <a href="#" className="font-medium text-green-600 hover:text-green-500">
-                पासवर्ड भूल गए?
+                Forgot your password?
               </a>
             </div>
           </div>
@@ -171,22 +171,22 @@ const Login = () => {
               {loading ? (
                 <div className="flex items-center">
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  साइन इन हो रहा है...
+                  Signing in...
                 </div>
               ) : (
-                'साइन इन करें'
+                'Sign in'
               )}
             </button>
           </div>
 
           <div className="text-center">
             <p className="text-sm text-gray-600">
-              खाता नहीं है?{' '}
+              Don't have an account?{' '}
               <Link
                 to="/register"
                 className="font-medium text-green-600 hover:text-green-500"
               >
-                साइन अप करें
+                Sign up
               </Link>
             </p>
           </div>
@@ -194,7 +194,7 @@ const Login = () => {
 
         {/* Demo Accounts Info */}
         <div className="mt-8 bg-blue-50 border border-blue-200 rounded-md p-4">
-          <h3 className="text-sm font-medium text-blue-800 mb-2">डेमो खाते</h3>
+          <h3 className="text-sm font-medium text-blue-800 mb-2">Demo Accounts</h3>
           <div className="text-xs text-blue-700 space-y-1">
             <p><strong>Producer:</strong> producer@demo.com / password123</p>
             <p><strong>Certifier:</strong> certifier@demo.com / password123</p>
