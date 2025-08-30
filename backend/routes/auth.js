@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 const User = require('../models/User');
-const auth = require('../middleware/auth');
+const { auth } = require('../middleware/auth');
 const { validateRequest } = require('../middleware/validation');
 
 const router = express.Router();
@@ -44,6 +44,12 @@ const loginSchema = Joi.object({
  */
 router.post('/register', validateRequest(registerSchema), async (req, res) => {
   try {
+    console.log('Registration request received:', {
+      username: req.body.username,
+      email: req.body.email,
+      role: req.body.role
+    });
+
     const {
       username,
       email,
@@ -60,6 +66,7 @@ router.post('/register', validateRequest(registerSchema), async (req, res) => {
     });
 
     if (existingUser) {
+      console.log('User already exists:', { email, username });
       return res.status(400).json({
         error: {
           message: 'User already exists with this email, username, or wallet address'
@@ -79,6 +86,7 @@ router.post('/register', validateRequest(registerSchema), async (req, res) => {
     });
 
     await user.save();
+    console.log('User created successfully:', { userId: user._id, username: user.username });
 
     // Generate JWT token
     const token = jwt.sign(
@@ -91,6 +99,8 @@ router.post('/register', validateRequest(registerSchema), async (req, res) => {
       { expiresIn: '24h' }
     );
 
+    console.log('JWT token generated for user:', user.username);
+
     res.status(201).json({
       message: 'User registered successfully',
       token,
@@ -101,7 +111,8 @@ router.post('/register', validateRequest(registerSchema), async (req, res) => {
     console.error('Registration error:', error);
     res.status(500).json({
       error: {
-        message: 'Registration failed'
+        message: 'Registration failed',
+        details: error.message
       }
     });
   }
@@ -114,11 +125,14 @@ router.post('/register', validateRequest(registerSchema), async (req, res) => {
  */
 router.post('/login', validateRequest(loginSchema), async (req, res) => {
   try {
+    console.log('Login request received:', { email: req.body.email });
+    
     const { email, password } = req.body;
 
     // Find user by email
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
+      console.log('User not found for login:', { email });
       return res.status(401).json({
         error: {
           message: 'Invalid credentials'
@@ -126,8 +140,11 @@ router.post('/login', validateRequest(loginSchema), async (req, res) => {
       });
     }
 
+    console.log('User found for login:', { userId: user._id, username: user.username, role: user.role });
+
     // Check if user is active
     if (!user.isActive) {
+      console.log('User account is deactivated:', { userId: user._id });
       return res.status(401).json({
         error: {
           message: 'Account is deactivated'
@@ -138,12 +155,15 @@ router.post('/login', validateRequest(loginSchema), async (req, res) => {
     // Verify password
     const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
+      console.log('Invalid password for user:', { userId: user._id });
       return res.status(401).json({
         error: {
           message: 'Invalid credentials'
         }
       });
     }
+
+    console.log('Password verified successfully for user:', user.username);
 
     // Update last login
     user.lastLogin = new Date();
@@ -160,6 +180,8 @@ router.post('/login', validateRequest(loginSchema), async (req, res) => {
       { expiresIn: '24h' }
     );
 
+    console.log('JWT token generated for login:', user.username);
+
     res.json({
       message: 'Login successful',
       token,
@@ -170,7 +192,8 @@ router.post('/login', validateRequest(loginSchema), async (req, res) => {
     console.error('Login error:', error);
     res.status(500).json({
       error: {
-        message: 'Login failed'
+        message: 'Login failed',
+        details: error.message
       }
     });
   }

@@ -9,7 +9,10 @@ const auth = async (req, res, next) => {
     // Get token from header
     const token = req.header('Authorization')?.replace('Bearer ', '');
     
+    console.log('Auth middleware - Token received:', token ? token.substring(0, 20) + '...' : 'No token');
+    
     if (!token) {
+      console.log('Auth middleware - No token provided');
       return res.status(401).json({
         error: {
           message: 'No token provided. Access denied.'
@@ -19,10 +22,12 @@ const auth = async (req, res, next) => {
 
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Auth middleware - Token verified for user:', decoded.userId);
     
     // Check if user still exists
     const user = await User.findById(decoded.userId);
     if (!user) {
+      console.log('Auth middleware - User not found:', decoded.userId);
       return res.status(401).json({
         error: {
           message: 'Token is valid but user no longer exists.'
@@ -32,6 +37,7 @@ const auth = async (req, res, next) => {
 
     // Check if user is active
     if (!user.isActive) {
+      console.log('Auth middleware - User account deactivated:', decoded.userId);
       return res.status(401).json({
         error: {
           message: 'User account is deactivated.'
@@ -46,6 +52,7 @@ const auth = async (req, res, next) => {
       role: decoded.role
     };
 
+    console.log('Auth middleware - Authentication successful for user:', user.username);
     next();
   } catch (error) {
     console.error('Auth middleware error:', error);

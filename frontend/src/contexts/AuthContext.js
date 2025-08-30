@@ -21,8 +21,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      console.log('Token set in axios headers:', token.substring(0, 20) + '...');
     } else {
       delete axios.defaults.headers.common['Authorization'];
+      console.log('Token removed from axios headers');
     }
   }, [token]);
 
@@ -35,7 +37,10 @@ export const AuthProvider = ({ children }) => {
           setUser(response.data.user);
         } catch (error) {
           console.error('Auth check failed:', error);
-          logout();
+          // Only logout if it's an authentication error, not network error
+          if (error.response && error.response.status === 401) {
+            logout();
+          }
         }
       }
       setLoading(false);
@@ -47,11 +52,13 @@ export const AuthProvider = ({ children }) => {
   // Login function
   const login = async (email, password) => {
     try {
+      console.log('Attempting login with:', { email });
       const response = await axios.post('/api/auth/login', {
         email,
         password
       });
 
+      console.log('Login response:', response.data);
       const { token: newToken, user: userData } = response.data;
       
       setToken(newToken);
@@ -61,6 +68,7 @@ export const AuthProvider = ({ children }) => {
       toast.success('Login successful!');
       return { success: true };
     } catch (error) {
+      console.error('Login error details:', error);
       const message = error.response?.data?.error?.message || 'Login failed';
       toast.error(message);
       return { success: false, error: message };
@@ -70,8 +78,15 @@ export const AuthProvider = ({ children }) => {
   // Register function
   const register = async (userData) => {
     try {
+      console.log('Attempting registration with:', { 
+        username: userData.username, 
+        email: userData.email,
+        role: userData.role 
+      });
+      
       const response = await axios.post('/api/auth/register', userData);
       
+      console.log('Registration response:', response.data);
       const { token: newToken, user: newUser } = response.data;
       
       setToken(newToken);
@@ -81,6 +96,7 @@ export const AuthProvider = ({ children }) => {
       toast.success('Registration successful!');
       return { success: true };
     } catch (error) {
+      console.error('Registration error details:', error);
       const message = error.response?.data?.error?.message || 'Registration failed';
       toast.error(message);
       return { success: false, error: message };
